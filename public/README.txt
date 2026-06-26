@@ -1,0 +1,1 @@
+These are placeholder images. Please replace them with your actual logo-white.png and logo-black.png files.

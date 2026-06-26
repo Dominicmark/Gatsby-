@@ -1,0 +1,6 @@
+{
+  "name": "Gatsby Luxury Home",
+  "description": "Premium home lifestyle brand specializing in luxury bedding, smart curtains, and home decor.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
