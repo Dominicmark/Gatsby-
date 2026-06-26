@@ -23,7 +23,7 @@ export default function Home() {
             loop 
             playsInline 
             preload="auto"
-            poster="https://res.cloudinary.com/dbbw8jsjc/video/upload/v1782314569/gastby_video_1_j4jucx.jpg"
+            poster="https://res.cloudinary.com/dbbw8jsjc/video/upload/so_0/v1782314569/gastby_video_1_j4jucx.jpg"
             className="w-full h-full object-cover"
           >
             <source src="https://res.cloudinary.com/dbbw8jsjc/video/upload/v1782314569/gastby_video_1_j4jucx.mp4" type="video/mp4" />
