@@ -123,7 +123,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {featuredProducts.map((product) => (
-              <div key={product.id} className="group cursor-pointer">
+              <Link to={`/product/${product.id}`} key={product.id} className="group cursor-pointer block">
                 <div className="relative aspect-[4/5] bg-warm-beige mb-6 overflow-hidden">
                   {product.isNew && (
                     <span className="absolute top-4 left-4 z-10 bg-white/90 text-charcoal-900 text-xs px-3 py-1 uppercase tracking-wider font-semibold">New</span>
@@ -143,7 +143,7 @@ export default function Home() {
                   <h3 className="font-serif text-lg text-charcoal-900 mb-2 truncate group-hover:text-gold-500 transition-colors">{product.name}</h3>
                   <p className="text-charcoal-900 font-medium">{formatPrice(product.price)}</p>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
           

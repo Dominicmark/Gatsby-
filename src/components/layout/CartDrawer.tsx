@@ -21,7 +21,7 @@ export default function CartDrawer() {
     const encodedMessage = encodeURIComponent(orderDetails);
     
     // Open WhatsApp
-    const whatsappUrl = `https://wa.me/2348000000000?text=${encodedMessage}`;
+    const whatsappUrl = `https://wa.me/2347019175328?text=${encodedMessage}`;
     window.open(whatsappUrl, "_blank");
 
     // Open Mail Client

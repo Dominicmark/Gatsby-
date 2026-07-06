@@ -52,11 +52,11 @@ export default function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start space-x-3 text-sm text-gray-300">
                 <MapPin className="h-5 w-5 text-gold-500 flex-shrink-0" />
-                <span>Banana Island, Ikoyi<br />Lagos, Nigeria</span>
+                <span>Tejuosho ultra modern shopping mall<br />Shop G305/306/307, Lagos</span>
               </li>
               <li className="flex items-center space-x-3 text-sm text-gray-300">
                 <Phone className="h-5 w-5 text-gold-500 flex-shrink-0" />
-                <span>+234 (0) 800 GATSBY</span>
+                <span>+234 701 917 5328</span>
               </li>
               <li className="flex items-center space-x-3 text-sm text-gray-300">
                 <Mail className="h-5 w-5 text-gold-500 flex-shrink-0" />

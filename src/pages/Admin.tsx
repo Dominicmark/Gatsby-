@@ -113,16 +113,46 @@ export default function Admin() {
                   className="w-full border border-gray-300 p-3 focus:outline-none focus:border-gold-500"
                 />
               </div>
-              <div>
-                <label className="block text-sm uppercase tracking-widest text-charcoal-900 mb-2 font-semibold">Image URL</label>
-                <input 
-                  type="url" 
-                  required
-                  value={formData.images?.[0] || ''} 
-                  onChange={e => setFormData({...formData, images: [e.target.value]})}
-                  className="w-full border border-gray-300 p-3 focus:outline-none focus:border-gold-500"
-                  placeholder="https://..."
-                />
+              <div className="md:col-span-2">
+                <label className="block text-sm uppercase tracking-widest text-charcoal-900 mb-2 font-semibold">Images</label>
+                {(formData.images || [""]).map((url, index) => (
+                  <div key={index} className="flex space-x-2 mb-2">
+                    <input 
+                      type="url" 
+                      required={index === 0}
+                      value={url} 
+                      onChange={e => {
+                        const newImages = [...(formData.images || [""])];
+                        newImages[index] = e.target.value;
+                        setFormData({...formData, images: newImages});
+                      }}
+                      className="flex-1 border border-gray-300 p-3 focus:outline-none focus:border-gold-500"
+                      placeholder="https://..."
+                    />
+                    {index > 0 && (
+                      <button 
+                        type="button" 
+                        onClick={() => {
+                          const newImages = [...(formData.images || [""])];
+                          newImages.splice(index, 1);
+                          setFormData({...formData, images: newImages});
+                        }}
+                        className="px-4 flex items-center justify-center border border-gray-300 text-gray-500 hover:text-red-500 transition-colors bg-gray-50"
+                      >
+                        <X className="w-5 h-5" />
+                      </button>
+                    )}
+                  </div>
+                ))}
+                <button 
+                  type="button"
+                  onClick={() => {
+                    setFormData({...formData, images: [...(formData.images || [""]), ""]});
+                  }}
+                  className="text-sm font-semibold uppercase tracking-widest text-charcoal-900 hover:text-gold-500 mt-2 flex items-center transition-colors"
+                >
+                  <Plus className="w-4 h-4 mr-1" /> Add Image
+                </button>
               </div>
             </div>
 

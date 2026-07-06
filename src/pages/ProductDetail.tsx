@@ -118,7 +118,7 @@ export default function ProductDetail() {
             </div>
 
             <a 
-              href={`https://wa.me/2348000000000?text=I'm interested in ${product.name} (${formatPrice(product.price)})`}
+              href={`https://wa.me/2347019175328?text=I'm interested in ${product.name} (${formatPrice(product.price)})`}
               target="_blank" rel="noreferrer"
               className="w-full flex items-center justify-center space-x-2 py-4 border border-gold-500 text-gold-600 hover:bg-gold-50 transition-colors font-medium mb-10"
             >

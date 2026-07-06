@@ -31,7 +31,7 @@ export default function Contact() {
                 <MapPin className="w-6 h-6 text-gold-500 mr-4 mt-1 flex-shrink-0" />
                 <div>
                   <h4 className="text-charcoal-900 font-medium mb-1">Showroom & Headquarters</h4>
-                  <p>Banana Island, Ikoyi<br />Lagos, Nigeria</p>
+                  <p>Tejuosho ultra modern shopping mall<br />Shop G305/306/307, Lagos</p>
                   <p className="text-sm text-gray-400 mt-2">Visits strictly by appointment.</p>
                 </div>
               </div>
@@ -39,7 +39,7 @@ export default function Contact() {
                 <Phone className="w-6 h-6 text-gold-500 mr-4 mt-1 flex-shrink-0" />
                 <div>
                   <h4 className="text-charcoal-900 font-medium mb-1">Call Us</h4>
-                  <p>+234 (0) 800 GATSBY</p>
+                  <p>+234 701 917 5328</p>
                   <p>Mon - Fri, 9am - 6pm (WAT)</p>
                 </div>
               </div>
