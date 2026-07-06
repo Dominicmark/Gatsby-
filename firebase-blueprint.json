@@ -1,0 +1,36 @@
+{
+  "models": {
+    "Product": {
+      "collection_name": "products",
+      "fields": {
+        "id": { "type": "string", "optional": true },
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "price": { "type": "number" },
+        "description": { "type": "string" },
+        "images": { "type": "array", "items": { "type": "string" } },
+        "features": { "type": "array", "items": { "type": "string" }, "optional": true },
+        "details": {
+          "type": "map",
+          "optional": true,
+          "fields": {
+            "material": { "type": "string", "optional": true },
+            "care": { "type": "string", "optional": true },
+            "dimensions": { "type": "string", "optional": true }
+          }
+        },
+        "isNew": { "type": "boolean", "optional": true },
+        "isBestseller": { "type": "boolean", "optional": true }
+      }
+    }
+  },
+  "security_rules": {
+    "default_rule": "deny",
+    "collections": {
+      "products": {
+        "read": "true",
+        "write": "true"
+      }
+    }
+  }
+}

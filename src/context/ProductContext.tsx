@@ -1,59 +1,80 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { Product } from "../types";
+import { db } from "../lib/firebase";
+import { collection, doc, setDoc, deleteDoc, onSnapshot, writeBatch } from "firebase/firestore";
 import { mockProducts as initialMockProducts } from "../data/mockData";
 
 interface ProductContextType {
   products: Product[];
-  addProduct: (product: Omit<Product, 'id'>) => void;
-  updateProduct: (id: string, product: Omit<Product, 'id'>) => void;
-  deleteProduct: (id: string) => void;
+  addProduct: (product: Omit<Product, 'id'>) => Promise<void>;
+  updateProduct: (id: string, product: Omit<Product, 'id'>) => Promise<void>;
+  deleteProduct: (id: string) => Promise<void>;
+  loading: boolean;
 }
 
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
 
 export function ProductProvider({ children }: { children: ReactNode }) {
   const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Load from local storage or fallback to mock data
-    const storedProducts = localStorage.getItem("gatsby_products");
-    if (storedProducts) {
-      try {
-        setProducts(JSON.parse(storedProducts));
-      } catch (e) {
-        setProducts(initialMockProducts);
+    const productsRef = collection(db, "products");
+    
+    const unsubscribe = onSnapshot(productsRef, (snapshot) => {
+      const fetchedProducts = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      })) as Product[];
+      
+      if (fetchedProducts.length === 0 && !localStorage.getItem("gatsby_db_seeded")) {
+        // Seed database if empty
+        const seedDb = async () => {
+          try {
+            const batch = writeBatch(db);
+            initialMockProducts.forEach(prod => {
+              const docRef = doc(productsRef, prod.id);
+              batch.set(docRef, prod);
+            });
+            await batch.commit();
+            localStorage.setItem("gatsby_db_seeded", "true");
+          } catch (e) {
+            console.error("Error seeding DB:", e);
+          }
+        };
+        seedDb();
+      } else {
+        setProducts(fetchedProducts);
       }
-    } else {
-      setProducts(initialMockProducts);
-      localStorage.setItem("gatsby_products", JSON.stringify(initialMockProducts));
-    }
+      setLoading(false);
+    }, (error) => {
+      console.error("Error fetching products from Firestore:", error);
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
   }, []);
 
-  const saveToStorage = (newProducts: Product[]) => {
-    setProducts(newProducts);
-    localStorage.setItem("gatsby_products", JSON.stringify(newProducts));
-  };
-
-  const addProduct = (product: Omit<Product, 'id'>) => {
-    const newProduct: Product = {
+  const addProduct = async (product: Omit<Product, 'id'>) => {
+    const newDocRef = doc(collection(db, "products"));
+    const newProduct = {
       ...product,
-      id: `p${Date.now()}`
+      id: newDocRef.id
     };
-    saveToStorage([...products, newProduct]);
+    await setDoc(newDocRef, newProduct);
   };
 
-  const updateProduct = (id: string, updatedProduct: Omit<Product, 'id'>) => {
-    const newProducts = products.map(p => p.id === id ? { ...updatedProduct, id } : p);
-    saveToStorage(newProducts);
+  const updateProduct = async (id: string, updatedProduct: Omit<Product, 'id'>) => {
+    const docRef = doc(db, "products", id);
+    await setDoc(docRef, { ...updatedProduct, id }, { merge: true });
   };
 
-  const deleteProduct = (id: string) => {
-    const newProducts = products.filter(p => p.id !== id);
-    saveToStorage(newProducts);
+  const deleteProduct = async (id: string) => {
+    await deleteDoc(doc(db, "products", id));
   };
 
   return (
-    <ProductContext.Provider value={{ products, addProduct, updateProduct, deleteProduct }}>
+    <ProductContext.Provider value={{ products, addProduct, updateProduct, deleteProduct, loading }}>
       {children}
     </ProductContext.Provider>
   );
