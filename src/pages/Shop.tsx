@@ -4,6 +4,7 @@ import { Filter, ChevronDown } from "lucide-react";
 import { formatPrice } from "../data/mockData";
 import { cn } from "../lib/utils";
 import { useProducts } from "../context/ProductContext";
+import { ProductCard } from "../components/ProductCard";
 
 const categories = ["All", "Smart Curtains", "Turkish Curtains", "Bedding Sets", "Bed Toppers", "Latex Pillows", "Towels"];
 
@@ -85,27 +86,7 @@ export default function Shop() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
               {filteredProducts.map((product) => (
-                <Link to={`/product/${product.id}`} key={product.id} className="group cursor-pointer block">
-                  <div className="relative aspect-[4/5] bg-warm-beige mb-4 overflow-hidden">
-                    {product.isNew && (
-                      <span className="absolute top-4 left-4 z-10 bg-white/90 text-charcoal-900 text-[10px] px-2 py-1 uppercase tracking-wider font-semibold">New</span>
-                    )}
-                    {product.isBestseller && !product.isNew && (
-                      <span className="absolute top-4 left-4 z-10 bg-gold-500/90 text-white text-[10px] px-2 py-1 uppercase tracking-wider font-semibold">Bestseller</span>
-                    )}
-                    <img 
-                      src={product.images[0]} 
-                      alt={product.name} 
-                      className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700 ease-in-out"
-                    />
-                    <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-                  <div>
-                    <h3 className="font-serif text-lg text-charcoal-900 mb-1 group-hover:text-gold-500 transition-colors">{product.name}</h3>
-                    <p className="text-xs text-gray-500 uppercase tracking-widest mb-2">{product.category}</p>
-                    <p className="text-charcoal-900 font-medium">{formatPrice(product.price)}</p>
-                  </div>
-                </Link>
+                <ProductCard key={product.id} product={product} />
               ))}
             </div>
             

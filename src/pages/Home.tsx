@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import { ArrowRight, ChevronRight, Star } from "lucide-react";
 import { formatPrice } from "../data/mockData";
 import { useProducts } from "../context/ProductContext";
+import { ProductCard } from "../components/ProductCard";
 
 export default function Home() {
   const { products } = useProducts();
@@ -123,27 +124,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {featuredProducts.map((product) => (
-              <Link to={`/product/${product.id}`} key={product.id} className="group cursor-pointer block">
-                <div className="relative aspect-[4/5] bg-warm-beige mb-6 overflow-hidden">
-                  {product.isNew && (
-                    <span className="absolute top-4 left-4 z-10 bg-white/90 text-charcoal-900 text-xs px-3 py-1 uppercase tracking-wider font-semibold">New</span>
-                  )}
-                  {product.isBestseller && !product.isNew && (
-                    <span className="absolute top-4 left-4 z-10 bg-gold-500/90 text-white text-xs px-3 py-1 uppercase tracking-wider font-semibold">Bestseller</span>
-                  )}
-                  <img 
-                    src={product.images[0]} 
-                    alt={product.name} 
-                    className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700 ease-in-out"
-                  />
-                  <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </div>
-                <div>
-                  <p className="text-xs text-gray-500 uppercase tracking-widest mb-2">{product.category}</p>
-                  <h3 className="font-serif text-lg text-charcoal-900 mb-2 truncate group-hover:text-gold-500 transition-colors">{product.name}</h3>
-                  <p className="text-charcoal-900 font-medium">{formatPrice(product.price)}</p>
-                </div>
-              </Link>
+              <ProductCard key={product.id} product={product} showCategory={true} />
             ))}
           </div>
           
